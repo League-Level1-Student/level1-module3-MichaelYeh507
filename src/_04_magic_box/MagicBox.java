@@ -12,20 +12,27 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class MagicBox extends JPanel implements Runnable, MouseListener {
-
+	JLabel JL = new JLabel();
 	/*
 	 * We are going to hide secrets within the magic box. 
 	 * When the user clicks on a secret place, stuff will happen.
 	 * 
 	 * 1. Make the frame respond to mouse clicks.
-	 * 
+	
 	 * 2. When the mouse is clicked, use the Media Palace (read the code in the magic_box package) to play sounds, 
 	 *    show images or speak.
 	 * 
@@ -54,6 +61,7 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.addMouseListener(this);
 	}
 
 	private void loadBackgroundImage() throws Exception {
@@ -73,6 +81,11 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		playMusicOnComputer("src/_04_magic_box/song.mp3");
+		JFrame frame = new JFrame();
+		frame.add(loadImageFromWithinProject("sw7ii7ztp1l32.jpg"));
+		frame.pack();
+		frame.setVisible(true);
 		
 	}
 
@@ -99,7 +112,20 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public void playMusicOnComputer(String fileName) {
+		File fileToPlay = new File(fileName);
+		try {
+			java.awt.Desktop.getDesktop().open(fileToPlay);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+	public JLabel loadImageFromWithinProject(String fileName) {
+		URL imageURL = getClass().getResource(fileName);
+		Icon icon = new ImageIcon(imageURL);
+		return new JLabel(icon);
+	}
 }
 
 

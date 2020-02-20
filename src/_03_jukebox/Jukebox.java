@@ -28,7 +28,10 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 public class Jukebox implements Runnable, ActionListener {
 
 	Song jingleBells = new Song("Jingle Bells with Lyrics _ Christmas Songs HD _ Christmas Songs and Carols.mp3");
+	JButton JB = new JButton();
+	JButton stop = new JButton();
 
+	
     public void run() {
 
 		// 1. Find an mp3 on your computer or on the Internet.
@@ -42,14 +45,19 @@ public class Jukebox implements Runnable, ActionListener {
 		 * cover is clicked, stop the currently playing song, and play the one
 		 * that was selected.
 		 */
-    	JButton JB = new JButton();
     	JFrame JF = new JFrame();
     	JF.setVisible(true);
     	JPanel JP = new JPanel();
     	JP.add(JB);
+    	JP.add(stop);
     	JF.add(JB);
+    	JF.pack();
+    	JF.add(stop);
+    	JF.pack();
+    	stop.setText("Stop");
     	JB.add(loadImage("maxresdefault.jpg"));
     	JB.addActionListener(this);
+    	stop.addActionListener(this);
     }
     
     
@@ -64,8 +72,13 @@ public class Jukebox implements Runnable, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		jingleBells.play();
-		jingleBells.stop();
+		System.out.println(e.getSource());
+		if (e.getSource() == JB) {
+			jingleBells.play();
+		} else if (e.getSource() == stop) {
+			jingleBells.stop();
+		}
+		
 	}
 
 }
